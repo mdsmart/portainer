@@ -1,25 +1,13 @@
-version: "3"
+version: "3.2"
 
 
 volumes:
-    sql:
+    nfs:
       driver: local
       driver_opts:
         type: nfs
         o: addr=192.168.200.200,rw,vers=4
-        device: ":/opt/${CLIENT}_SQL"
-    html:
-      driver: local
-      driver_opts:
-        type: nfs
-        o: addr=192.168.200.200,rw,vers=4
-        device: ":/opt/${CLIENT}_HTML"
-    moodle:
-      driver: local
-      driver_opts:
-        type: nfs
-        o: addr=192.168.200.200,rw,vers=4
-        device: ":/opt/${CLIENT}_MOODLE"
+        device: ":/opt"
 
 networks:
   external:
@@ -32,17 +20,17 @@ services:
     expose:
       - "3306"
     volumes:
-      - sql:/var/lib/mysql:Z
+      - nfs:/var/lib/mysql:Z
       - ./my.cnf:/etc/my.cnf:Z
     environment:
       - MYSQL_ROOT_PASSWORD="${CLIENT}12345"
-      - MYSQL_ROOT_HOST=a%
+      - MYSQL_ROOT_HOST=%
       - LANG=pl_PL.UTF-8
   php-fpm:
     image: mdsmart/moodle_php-fpm
     volumes:
-      - html:/var/www:Z
-      - moodle:/var/moodledata:Z
+      - nfs:/var/www:Z
+      - nfs:/var/moodledata:Z
     depends_on:
       - mysql
   nginx:
@@ -52,8 +40,8 @@ services:
     expose:
       - "80"
     volumes:
-      - html:/var/www:Z
-      - moodle:/var/moodledata:Z
+      - nfs:/var/www:Z
+      - nfs:/var/moodledata:Z
     deploy:
       labels:
         - traefik.enable="true"
