@@ -7,7 +7,7 @@ volumes:
       driver_opts:
         type: nfs
         o: addr=192.168.200.200,rw,vers=4
-        device: ":/opt/${CLIENT}"
+        device: ":/opt/users/${CLIENT}"
 
 networks:
   external:
