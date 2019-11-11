@@ -7,7 +7,13 @@ volumes:
       driver_opts:
         type: nfs
         o: addr=192.168.200.200,rw,vers=4
-        device: ":/opt/users/${CLIENT}"
+        device: ":/opt/users/${CLIENT}/web"
+    mysql_nfs:
+      driver: local
+      driver_opts:
+        type: nfs
+        o: addr=192.168.200.200,rw,vers=4
+        device: ":/opt/users/${CLIENT}/mysql"
 
 networks:
   external:
@@ -16,12 +22,11 @@ networks:
 
 services:
   mysql:
-    image: mysql/mysql-server:5.7
+    image: mdsmart/mysql:5.7
     expose:
       - "3306"
     volumes:
-      - nfs:/var/lib/mysql:Z
-      - ./my.cnf:/etc/my.cnf:Z
+      - mysql_nfs:/var/lib/mysql:Z
     environment:
       - MYSQL_ROOT_PASSWORD="${CLIENT}12345"
       - MYSQL_ROOT_HOST=%
