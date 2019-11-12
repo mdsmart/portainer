@@ -52,11 +52,11 @@ services:
         - "traefik.enable=true"
         - "traefik.port=80"
         - "traefik.backend=${CLIENT}"
-        - "traefik.frontend.entryPoints=http"
+        - "traefik.frontend.entryPoints=http,https"
         - "traefik.frontend.headers.SSLRedirect=true"
         - "traefik.docker.network=external"
         - "traefik.frontend.rule=Host:${CLIENT}.poc.dolineo.pl"
-        - "traefik.protocol=http,https"
+        - "traefik.protocol=http"
         - "traefik.passHostHeader=true"
 
 
