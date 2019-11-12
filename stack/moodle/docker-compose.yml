@@ -44,6 +44,10 @@ services:
       - moodle_nfs:/var/moodledata:Z
     depends_on:
       - mysql
+    environment:
+      - DBPASS="${CLIENT}12345"
+      - DBUSER="root"
+      - DBHOST="mysql"
   nginx:
     image: mdsmart/moodle_nginx
     depends_on: 
