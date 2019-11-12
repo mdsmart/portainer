@@ -47,7 +47,7 @@ services:
     environment:
       - DBPASS="${CLIENT}12345"
       - DBUSER="root"
-      - DBHOST="mysql"
+      - DBNAME="${CLIENT}"
   nginx:
     image: mdsmart/moodle_nginx
     depends_on: 
