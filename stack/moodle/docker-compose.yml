@@ -38,6 +38,8 @@ services:
       - MYSQL_ROOT_PASSWORD="${CLIENT}12345"
       - MYSQL_ROOT_HOST=%
       - MYSQL_DATABASE="${CLIENT}"
+      - MYSQL_USER="${CLIENT}"
+      - MYSQL_DATABASE="${CLIENT}12345"
       - LANG=pl_PL.UTF-8
   
   php-fpm:
@@ -49,7 +51,7 @@ services:
       - mysql
     environment:
       - DBPASS="${CLIENT}12345"
-      - DBUSER="root"
+      - DBUSER="${CLIENT}"
       - DBNAME="${CLIENT}"
   
   nginx:
