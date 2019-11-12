@@ -54,6 +54,8 @@ services:
     volumes:
       - html_nfs:/var/www:Z
       - moodle_nfs:/var/moodledata:Z
+    networks:
+      - external
     deploy:
       labels:
         - "traefik.enable=true"
