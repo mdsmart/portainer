@@ -27,6 +27,7 @@ networks:
     external: true
 
 services:
+  
   mysql:
     image: mdsmart/mysql:5.7
     expose:
@@ -36,7 +37,9 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD="${CLIENT}12345"
       - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE="${CLIENT}"
       - LANG=pl_PL.UTF-8
+  
   php-fpm:
     image: mdsmart/moodle_php-fpm
     volumes:
@@ -48,6 +51,7 @@ services:
       - DBPASS="${CLIENT}12345"
       - DBUSER="root"
       - DBNAME="${CLIENT}"
+  
   nginx:
     image: mdsmart/moodle_nginx
     depends_on: 
