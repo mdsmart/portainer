@@ -2,12 +2,19 @@ version: "3.2"
 
 
 volumes:
-    nfs:
+    moodle_nfs:
       driver: local
       driver_opts:
         type: nfs
         o: addr=192.168.200.200,rw,vers=4
-        device: ":/opt/users/${CLIENT}/web"
+        device: ":/opt/users/${CLIENT}/moodle"
+    html_nfs:
+      driver: local
+      driver_opts:
+        type: nfs
+        o: addr=192.168.200.200,rw,vers=4
+        device: ":/opt/users/${CLIENT}/html"
+
     mysql_nfs:
       driver: local
       driver_opts:
@@ -34,8 +41,8 @@ services:
   php-fpm:
     image: mdsmart/moodle_php-fpm
     volumes:
-      - nfs:/var/www:Z
-      - nfs:/var/moodledata:Z
+      - html_nfs:/var/www:Z
+      - moodle_nfs:/var/moodledata:Z
     depends_on:
       - mysql
   nginx:
@@ -45,8 +52,8 @@ services:
     expose:
       - "80"
     volumes:
-      - nfs:/var/www:Z
-      - nfs:/var/moodledata:Z
+      - html_nfs:/var/www:Z
+      - moodle_nfs:/var/moodledata:Z
     deploy:
       labels:
         - "traefik.enable=true"
