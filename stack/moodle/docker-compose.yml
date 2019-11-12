@@ -25,7 +25,11 @@ volumes:
 networks:
   external:
     external: true
+  ${CLIENT}:
+    driver: overlay
+    attachable: true
 
+    
 
 services:
   mysql:
@@ -38,6 +42,8 @@ services:
       - MYSQL_ROOT_PASSWORD="${CLIENT}12345"
       - MYSQL_ROOT_HOST=%
       - LANG=pl_PL.UTF-8
+    networks:
+      - ${CLIENT}
   php-fpm:
     image: mdsmart/moodle_php-fpm
     volumes:
@@ -45,6 +51,8 @@ services:
       - moodle_nfs:/var/moodledata:Z
     depends_on:
       - mysql
+    networks:
+      - ${CLIENT}
   nginx:
     image: mdsmart/moodle_nginx
     depends_on: 
@@ -56,6 +64,7 @@ services:
       - moodle_nfs:/var/moodledata:Z
     networks:
       - external
+      - ${CLIENT}
     deploy:
       labels:
         - "traefik.enable=true"
