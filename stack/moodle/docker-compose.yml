@@ -41,6 +41,8 @@ services:
       - MYSQL_USER=${CLIENT}
       - MYSQL_PASSWORD=${CLIENT}12345
       - LANG=pl_PL.UTF-8
+    healthcheck:
+      disable: true
   
   php-fpm:
     image: mdsmart/moodle_php-fpm
