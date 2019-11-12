@@ -49,13 +49,15 @@ services:
       - nfs:/var/moodledata:Z
     deploy:
       labels:
-        - traefik.enable="true"
-        - traefik.port="80"
-        - traefik.backend="${CLIENT}"
-        - traefik.webservice.frontend.entryPoints="http"
-        - traefik.docker.network="external"
-        - traefik.passHostHeader="true"
-        - traefik.frontend.rule="Host:${CLIENT}.poc.dolineo.pl"
+        - "traefik.enable=true"
+        - "traefik.port=80"
+        - "traefik.backend=${CLIENT}"
+        - "traefik.frontend.entryPoints=http"
+        - "traefik.frontend.headers.SSLRedirect=true"
+        - "traefik.docker.network=external"
+        - "traefik.frontend.rule=Host:${CLIENT}.poc.dolineo.pl"
+        - "traefik.protocol=http"
+        - "traefik.passHostHeader=true"
 
 
 # vim:ts=2:sw=2:et:ai:
