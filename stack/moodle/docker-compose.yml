@@ -52,6 +52,7 @@ services:
     depends_on:
       - mysql
     environment:
+      - FTPPASS=ZmienMnie1
       - DBPASS=${CLIENT}12345
       - DBUSER=${CLIENT}
       - DBNAME=${CLIENT}
