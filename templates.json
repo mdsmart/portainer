@@ -1,12 +1,12 @@
 [  
   {
-    "type": "2",
-    "title": "moodle",
+    "type": 2,
+    "title": "mDolineo",
     "description": "świat pjest okropnym miejsce i tylko Moodle może to zmienić",
     "note": "komplet - 3 elementy db/php/nginx",
-    "categories": ["CMS"],
+    "categories": ["MOODLE"],
     "platform": "linux",
-    "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/wordpress.png",
+    "logo": "https://icon-library.net/images/moodle-icon/moodle-icon-5.jpg",
     "repository": {
       "url": "https://github.com/mdsmart/portainer",
       "stackfile": "stack/moodle/docker-compose.yml"
