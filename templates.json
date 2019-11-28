@@ -1,6 +1,6 @@
 [  
   {
-    "type": "stack",
+    "type": "2",
     "title": "moodle",
     "description": "świat pjest okropnym miejsce i tylko Moodle może to zmienić",
     "note": "komplet - 3 elementy db/php/nginx",
