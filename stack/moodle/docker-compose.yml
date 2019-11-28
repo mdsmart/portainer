@@ -77,7 +77,7 @@ services:
         - "traefik.frontend.entryPoints=http,https"
         - "traefik.frontend.headers.SSLRedirect=true"
         - "traefik.docker.network=external"
-        - "traefik.frontend.rule=Host:${CLIENT}.poc.dolineo.pl"
+        - "traefik.frontend.rule=Host:${CLIENT}.app.dolineo.com"
         - "traefik.protocol=http"
         - "traefik.passHostHeader=true"
 
