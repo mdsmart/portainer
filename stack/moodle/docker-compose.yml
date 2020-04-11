@@ -23,7 +23,7 @@ volumes:
         device: ":/opt/users/${CLIENT}/mysql"
 
 networks:
-  external:
+  global:
     external: true
 
 services:
@@ -67,7 +67,7 @@ services:
       - html_nfs:/var/www:Z
       - moodle_nfs:/var/moodledata:Z
     networks:
-      - external
+      - global
       - default
     deploy:
       labels:
@@ -76,10 +76,9 @@ services:
         - "traefik.backend=${CLIENT}"
         - "traefik.frontend.entryPoints=http,https"
         - "traefik.frontend.headers.SSLRedirect=true"
-        - "traefik.docker.network=external"
+        - "traefik.docker.network=global"
         - "traefik.frontend.rule=Host:${CLIENT}.app.dolineo.com"
         - "traefik.protocol=http"
         - "traefik.passHostHeader=true"
-
 
 # vim:ts=2:sw=2:et:ai:
