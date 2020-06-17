@@ -18,5 +18,31 @@
         "description": "nazwa pod która będzie dostępna apka."
       }
     ]
+  },
+  {
+    "type": 2,
+    "title": "MySQL - mDolineo",
+    "description": "wariant z dedykowamym polem MySQL",
+    "note": "komplet - 3 elementy db/php/nginx",
+    "categories": ["MOODLE"],
+    "platform": "linux",
+    "logo": "https://icon-library.net/images/moodle-icon/moodle-icon-5.jpg",
+    "repository": {
+      "url": "https://github.com/mdsmart/portainer",
+      "stackfile": "stack/moodle/docker-compose.yml"
+    },
+    "env": [
+      {
+        "name": "CLIENT",
+        "label": "SUBDOMENA",
+        "description": "nazwa pod która będzie dostępna apka."
+      },
+      {
+        "name": "DBHOST",
+        "label": "MySQL Server",
+        "description": "Adres dedykowanego serwera MySQL",
+        "default": "mysql"
+      }
+    ]
   }
 ]
