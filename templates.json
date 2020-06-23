@@ -38,7 +38,7 @@
         "description": "nazwa pod która będzie dostępna apka."
       },
       {
-        "name": "DBHOST",
+        "name": "MYSQLHOST",
         "label": "MySQL Server",
         "description": "Adres dedykowanego serwera MySQL",
         "default": "mysql"

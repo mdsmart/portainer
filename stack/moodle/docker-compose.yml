@@ -53,6 +53,7 @@ services:
       - mysql
     environment:
       - FTPPASS=ZmienMnie1
+      - DBHOST=${MYSQLHOST}
       - DBPASS=${CLIENT}12345
       - DBUSER=${CLIENT}
       - DBNAME=${CLIENT}
