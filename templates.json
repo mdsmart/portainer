@@ -24,5 +24,36 @@
         "default": "mysql"
       }
     ]
+  },
+    {
+    "type": 2,
+    "title": "mDolineo - CUSTOM",
+    "description": "Scenariusze",
+    "note": "komplet - 3 elementy db/php/nginx",
+    "categories": ["MOODLE"],
+    "platform": "linux",
+    "logo": "https://e7.pngegg.com/pngimages/656/940/png-clipart-computer-icons-moodle-font-uplay-icon-angle-text-thumbnail.png",
+    "repository": {
+      "url": "https://github.com/mdsmart/portainer",
+      "stackfile": "stack/moodle/docker-compose.yml"
+    },
+    "env": [
+      {
+        "name": "CLIENT",
+        "label": "SUBDOMENA",
+        "description": "nazwa pod która będzie dostępna apka."
+      },
+       {
+        "name": "WERSJA",
+        "label": "WERSJA",
+        "description": "nazwa wcześniej eksportowanego obrazu środowiska"
+      },
+      {
+        "name": "MYSQLHOST",
+        "label": "MySQL Server",
+        "description": "Adres dedykowanego serwera MySQL - jeśli nie wiesz, zostaw domyślny",
+        "default": "mysql"
+      }
+    ]
   }
 ]
