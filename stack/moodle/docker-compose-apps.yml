@@ -2,38 +2,38 @@ version: "3.2"
 
 
 volumes:
-    vol_moodle:
+    moodle_nfs:
       driver: local
       driver_opts:
-        o: bind
-        type: none
-        device: /opt/${CLIENT}/moodle
-    vol_html:
+        type: nfs
+        o: addr=192.168.200.200,soft,nolock,rw,vers=4
+        device: ":/opt/users/${CLIENT}/moodle"
+    html_nfs:
       driver: local
       driver_opts:
-        o: bind
-        type: none
-        device: /opt/${CLIENT}/html
+        type: nfs
+        o: addr=192.168.200.200,soft,nolock,rw,vers=4
+        device: ":/opt/users/${CLIENT}/html"
 
-    vol_mysql:
+    mysql_nfs:
       driver: local
       driver_opts:
-        o: bind
-        type: none
-        device: /opt/${CLIENT}/mysql
+        type: nfs
+        o: addr=192.168.200.200,soft,nolock,rw,vers=4
+        device: ":/opt/users/${CLIENT}/mysql"
 
 networks:
-  external:
+  global:
     external: true
 
 services:
   
   mysql:
-    image: mdsmart/mysql:5.7
+    image: mdsmart/mysql:5.7-custom
     expose:
       - "3306"
     volumes:
-      - vol_mysql:/var/lib/mysql:Z
+      - mysql_nfs:/var/lib/mysql:Z
     environment:
       - MYSQL_ROOT_PASSWORD=${CLIENT}12345
       - MYSQL_ROOT_HOST=%
@@ -41,22 +41,28 @@ services:
       - MYSQL_USER=${CLIENT}
       - MYSQL_PASSWORD=${CLIENT}12345
       - LANG=pl_PL.UTF-8
+      - TZ=Europe/Warsaw
+      - IMAGE=${WERSJA}
+
     healthcheck:
       disable: true
   
   php-fpm:
-    image: mdsmart/moodle_php-fpm
+    image: mdsmart/moodle_php-fpm:custom
     volumes:
-      - vol_html:/var/www:Z
-      - vol_moodle:/var/moodledata:Z
+      - html_nfs:/var/www:Z
+      - moodle_nfs:/var/moodledata:Z
     depends_on:
       - mysql
     environment:
       - FTPPASS=ZmienMnie1
+      - DBHOST=${MYSQLHOST}
       - DBPASS=${CLIENT}12345
       - DBUSER=${CLIENT}
       - DBNAME=${CLIENT}
-  
+      - TZ=Europe/Warsaw
+      - IMAGE=${WERSJA}
+ 
   nginx:
     image: mdsmart/moodle_nginx
     depends_on: 
@@ -64,10 +70,10 @@ services:
     expose:
       - "80"
     volumes:
-      - vol_html:/var/www:Z
-      - vol_moodle:/var/moodledata:Z
+      - html_nfs:/var/www:Z
+      - moodle_nfs:/var/moodledata:Z
     networks:
-      - external
+      - global
       - default
     deploy:
       labels:
@@ -76,10 +82,9 @@ services:
         - "traefik.backend=${CLIENT}"
         - "traefik.frontend.entryPoints=http,https"
         - "traefik.frontend.headers.SSLRedirect=true"
-        - "traefik.docker.network=external"
-        - "traefik.frontend.rule=Host:${CLIENT}.apps.dolineo.com"
+        - "traefik.docker.network=global"
+        - "traefik.frontend.rule=Host:${CLIENT}.app.dolineo.com"
         - "traefik.protocol=http"
         - "traefik.passHostHeader=true"
-
 
 # vim:ts=2:sw=2:et:ai:
