@@ -35,7 +35,7 @@
     "logo": "https://e7.pngegg.com/pngimages/656/940/png-clipart-computer-icons-moodle-font-uplay-icon-angle-text-thumbnail.png",
     "repository": {
       "url": "https://github.com/mdsmart/portainer",
-      "stackfile": "stack/moodle/docker-compose.yml"
+      "stackfile": "stack/moodle/docker-compose-apps.yml"
     },
     "env": [
       {
