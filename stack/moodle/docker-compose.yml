@@ -6,20 +6,20 @@ volumes:
       driver: local
       driver_opts:
         type: nfs
-        o: addr=192.168.200.200,soft,nolock,rw,vers=4
+        o: addr=192.168.200.200,hard,nolock,rw,vers=4,rsize=65536,wsize=65536,timeo=14,tcp,noatime
         device: ":/opt/users/${CLIENT}/moodle"
     html_nfs:
       driver: local
       driver_opts:
         type: nfs
-        o: addr=192.168.200.200,soft,nolock,rw,vers=4
+        o: addr=192.168.200.200,hard,nolock,rw,vers=4,rsize=65536,wsize=65536,timeo=14,tcp,noatime
         device: ":/opt/users/${CLIENT}/html"
 
     mysql_nfs:
       driver: local
       driver_opts:
         type: nfs
-        o: addr=192.168.200.200,soft,nolock,rw,vers=4
+        o: addr=192.168.200.200,hard,nolock,rw,vers=4,rsize=65536,wsize=65536,timeo=14,tcp,noatime
         device: ":/opt/users/${CLIENT}/mysql"
 
 networks:
