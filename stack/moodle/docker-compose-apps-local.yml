@@ -22,7 +22,7 @@ volumes:
 
 networks:
   global:
-    external: true
+    external: 
       name: global
 
 services:
