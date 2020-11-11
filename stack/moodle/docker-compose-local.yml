@@ -39,9 +39,6 @@ services:
       - MYSQL_PASSWORD=${CLIENT}12345
       - LANG=pl_PL.UTF-8
       - TZ=Europe/Warsaw
-    healthcheck:
-      disable: true
-
   php-fpm:
     image: mdsmart/moodle_php-fpm
     volumes:
