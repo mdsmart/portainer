@@ -1,0 +1,86 @@
+version: "3.2"
+
+volumes:
+    moodle_nfs:
+      driver: local
+      driver_opts:
+        type: none 
+        o: bind
+        device: "/opt/users/${CLIENT}/moodle"
+    html_nfs:
+      driver: local
+      driver_opts:
+        type: none 
+        o: bind
+        device: "/opt/users/${CLIENT}/html"
+    mysql_nfs:
+      driver: local
+      driver_opts:
+        type: none 
+        o: bind
+        device: "/opt/users/${CLIENT}/mysql"
+
+networks:
+  global:
+    external: true
+
+services:
+  mysql:
+    image: mdsmart/mysql:5.7-custom
+    expose:
+      - "3306"
+    volumes:
+      - mysql_nfs:/var/lib/mysql:Z
+    environment:
+      - MYSQL_ROOT_PASSWORD=${CLIENT}12345
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=${CLIENT}
+      - MYSQL_USER=${CLIENT}
+      - MYSQL_PASSWORD=${CLIENT}12345
+      - LANG=pl_PL.UTF-8
+      - TZ=Europe/Warsaw
+      - IMAGE=${WERSJA}
+    healthcheck:
+      disable: true
+  
+  php-fpm:
+    image: mdsmart/moodle_php-fpm:custom
+    volumes:
+      - html_nfs:/var/www:Z
+      - moodle_nfs:/var/moodledata:Z
+    depends_on:
+      - mysql
+    environment:
+      - FTPPASS=ZmienMnie1
+      - DBHOST=${MYSQLHOST}
+      - DBPASS=${CLIENT}12345
+      - DBUSER=${CLIENT}
+      - DBNAME=${CLIENT}
+      - TZ=Europe/Warsaw
+      - IMAGE=${WERSJA}
+ 
+  nginx:
+    image: mdsmart/moodle_nginx
+    depends_on: 
+      - php-fpm
+    expose:
+      - "80"
+    volumes:
+      - html_nfs:/var/www:Z
+      - moodle_nfs:/var/moodledata:Z
+    networks:
+      - global
+      - default
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.port=80"
+        - "traefik.backend=${CLIENT}"
+        - "traefik.frontend.entryPoints=http,https"
+        - "traefik.frontend.headers.SSLRedirect=true"
+        - "traefik.docker.network=global"
+        - "traefik.frontend.rule=Host:${CLIENT}.app.dolineo.com"
+        - "traefik.protocol=http"
+        - "traefik.passHostHeader=true"
+
+# vim:ts=2:sw=2:et:ai:
