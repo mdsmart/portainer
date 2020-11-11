@@ -71,16 +71,15 @@ services:
     networks:
       - global
       - default
-    deploy:
-      labels:
-        - "traefik.enable=true"
-        - "traefik.port=80"
-        - "traefik.backend=${CLIENT}"
-        - "traefik.frontend.entryPoints=http,https"
-        - "traefik.frontend.headers.SSLRedirect=true"
-        - "traefik.docker.network=global"
-        - "traefik.frontend.rule=Host:${CLIENT}.app.dolineo.com"
-        - "traefik.protocol=http"
-        - "traefik.passHostHeader=true"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.backend=${CLIENT}"
+      - "traefik.frontend.entryPoints=http,https"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.docker.network=global"
+      - "traefik.frontend.rule=Host:${CLIENT}.app.dolineo.com"
+      - "traefik.protocol=http"
+      - "traefik.passHostHeader=true"
 
 # vim:ts=2:sw=2:et:ai:
