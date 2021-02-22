@@ -2,7 +2,7 @@
    "version":"2",
    "templates":[
       {
-         "type":2,
+         "type":3,
          "title":"mDolineo",
          "description":"wariant z dedykowamym polem MySQL",
          "note":"komplet - 3 elementy db/php/nginx",
@@ -30,7 +30,7 @@
          ]
       },
       {
-         "type":2,
+         "type":3,
          "title":"mDolineo - CUSTOM",
          "description":"Scenariusze",
          "note":"komplet - 3 elementy db/php/nginx",
