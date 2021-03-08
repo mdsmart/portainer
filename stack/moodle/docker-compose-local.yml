@@ -27,7 +27,7 @@ networks:
 
 services:
   mysql:
-    image: mdsmart/mysql:5.7
+    image: mdsmart/mysql57
     expose:
       - "3306"
     volumes:
